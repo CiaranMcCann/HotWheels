@@ -244,12 +244,13 @@ void BaseApplication::setupPhysics()
 	NxOgre::ResourceSystem::getSingleton()->openProtocol(new Critter::OgreResourceProtocol());
 	mWorld->getRemoteDebugger()->connect();
 	NxOgre::SceneDescription scene_description;
+	
 	scene_description.mGravity = Constants::MEAN_EARTH_GRAVITY;
 	scene_description.mUseHardware = true;
 	mScene = mWorld->createScene(scene_description);
 	//mScene->createSceneGeometry(NxOgre::PlaneGeometryDescription());
 	mRenderSystem = new Critter::RenderSystem(mScene, mSceneMgr);
-	//mScene->getMaterial(0)->setAll(0.1, 0.5,0.5);
+	mScene->getMaterial(0)->setAll(0.1, 0.5,0.5);
 
 
 

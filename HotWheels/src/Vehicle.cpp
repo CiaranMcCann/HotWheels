@@ -146,8 +146,8 @@ Vehicle* Vehicle::createVehicle(NxOgre::String vehicleName, Critter::RenderSyste
 
     VehicleDescription desc = Vehicle::readFromFile(filename);
 
-   // if (critter->getScene()->getMaterial(VEHICLE_MATERIAL_ID) == NULL)
-       // critter->getScene()->createMaterial()->setAll(0, 0.4f, 0.4f);
+   if (critter->getScene()->getMaterial(VEHICLE_MATERIAL_ID) == NULL)
+        critter->getScene()->createMaterial()->setAll(0, 0.4f, 0.4f);
 
     return new Vehicle(vehicleName, desc, critter, mSceneMgr);
 }
@@ -219,6 +219,10 @@ void Vehicle::update(float diff)
 
 	if(Track::trackingEnabled && gears->getCurrentGear() > 1)
 		Track::trackVechicleMovement(this->body->getGlobalPosition(), "aTrack.txt", 60);
+
+
+	//if(this->getBody()->getGlobalPosition().y < 295)
+	//this->getBody()->addForce(NxOgre::Vec3(0,500,0));
 
     float motorTorque = computeAxisTorque();
 

@@ -5,7 +5,7 @@
 ofstream Track::file;
 int Track::fileTimer = 0;
 NxOgre::Vec3 Track::previous;
-bool Track::trackingEnabled = false;
+bool Track::trackingEnabled = true;
 
 Track::Track(void):currentWayPoint(10)
 {

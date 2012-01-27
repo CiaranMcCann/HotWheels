@@ -58,7 +58,7 @@ void HotWheels::createScene(){
 	pPlaneEnt->setCastShadows(false);
 
 	Ogre::SceneNode* floorNode = mSceneMgr->createSceneNode("floor1");
-	floorNode->setPosition(-500,295,300);
+	floorNode->setPosition(-500,299,300);
 	mSceneMgr->getRootSceneNode()->addChild(floorNode);
 	floorNode->attachObject(pPlaneEnt);
 
