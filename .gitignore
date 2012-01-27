@@ -1,0 +1,6 @@
+*.sdf
+*.log
+*.opensdf
+*.tlog
+HotWheels/obj
+HotWheels/bin
