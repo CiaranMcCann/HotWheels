@@ -1,8 +1,15 @@
 #include "stdafx.h"
 #pragma once
+
 using namespace std;
 
 namespace Utils {
+
+
+	template<typename T>
+	float toDegree(T radians){
+		return radians * (180/3.14);
+	}
 
 
 	template<typename T>
@@ -18,7 +25,6 @@ namespace Utils {
 	void logMessage(T objectToPrint){
 		_cprintf( (toString(objectToPrint)+"\n").c_str() );
 	}
-
 	
 	template<typename T> //hack as I get a linker error if I don't have this???
 	void split(const T& str, const string& delimiters , std::vector<string>& tokens)

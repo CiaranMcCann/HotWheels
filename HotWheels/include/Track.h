@@ -29,11 +29,13 @@ public:
 	Track(void);
 	~Track(void);
 
-	void loadWayPoints(Ogre::String wayPointFileName, SceneManager* sceneMgr);
+	void loadWayPoints(Ogre::String wayPointFileName, SceneManager* sceneMgr, Critter::RenderSystem* mRenderSystem);
 	static void trackVechicleMovement(NxOgre::Vec3 pos, Ogre::String fileNameToWriteTo, int frequnceyOfWrites);
 
 	// Returns a pionter to the track data which then can be used by the car to move around it
 	Ogre::Vector3 * getTrackDataPiontAt(int index);
+
+	Ogre::SceneNode * getTrackNodeAt(int index);
 
 	void checkCurrentWayPoint(Ogre::Vector3 playerPosition);
 

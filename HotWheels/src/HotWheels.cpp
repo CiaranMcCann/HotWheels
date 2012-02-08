@@ -27,16 +27,17 @@ void HotWheels::createScene(){
 
 	
 	if(!Track::trackingEnabled)
-	mTrack.loadWayPoints("aTrack.txt", mSceneMgr);
+	mTrack.loadWayPoints("aTrack.txt", mSceneMgr, mRenderSystem);
   
 	/************************************************************************/
 	/*  Setup some default Ogre scene                                       */ 
 
-	mSceneMgr->setSkyBox(true, "Examples/EarlyMorningSkyBox", 1500, false);
+	
 
 	//set shadows
 	mSceneMgr->setAmbientLight(Ogre::ColourValue(0, 0, 0));
-	mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
+	mSceneMgr->setSkyBox(true, "Examples/EarlyMorningSkyBox");
+	//mSceneMgr->setShadowTechnique(Ogre::SHADOWTYPE_STENCIL_ADDITIVE);
 
 //	mSceneMgr->setSkyBox(true, "Examples/SpaceSkyBox");
 
@@ -58,7 +59,7 @@ void HotWheels::createScene(){
 	pPlaneEnt->setCastShadows(false);
 
 	Ogre::SceneNode* floorNode = mSceneMgr->createSceneNode("floor1");
-	floorNode->setPosition(-500,299,300);
+	floorNode->setPosition(-500,297,300);
 	mSceneMgr->getRootSceneNode()->addChild(floorNode);
 	floorNode->attachObject(pPlaneEnt);
 

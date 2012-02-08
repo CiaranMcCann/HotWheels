@@ -54,6 +54,21 @@ public:
 
 	void attachCamera(Ogre::Camera* pCamera);
 
+	Ogre::Vector3 getWheelDirection(){
+
+		Ogre::Node* g = this->getBody()->getNode()->getSceneNode()->getChild(3);
+
+		return Vector3(0,0,0);
+	}
+
+	VehicleWheel* getWheel(int index){
+
+		assert(index < 6);
+		return wheels[index];
+	}
+
+	VehicleWheel* wheels[4];
+
 protected:
     bool steering;
     float accelerationPedal;
@@ -65,7 +80,7 @@ protected:
     std::string vehicleName;
     Critter::RenderSystem* critter;
     Critter::Body* body;
-    VehicleWheel* wheels[4];
+    
     VehicleGears* gears;
     VehicleMotor* motor;
 	Ogre::Light* directionalLight;

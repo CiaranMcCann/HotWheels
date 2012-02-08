@@ -2,7 +2,7 @@
 #include "Ai.h"
 
 
-Ai::Ai(): mCurrentWayPiont(25), a(0)
+Ai::Ai(): mCurrentWayPiont(10), a(0)
 {
  
 }
@@ -14,88 +14,163 @@ Ai::~Ai(void)
 
 void Ai::init(Critter::RenderSystem* render, Ogre::SceneManager* mSceneMgr){
 	pCar = Vehicle::createVehicle("camaro",render,  mSceneMgr);
+	pCar->getBody()->setGlobalPosition(Vector3(350.36890, 299.98193, -569.52747));	
+	this->mSceneMgr = mSceneMgr;
 
-	pCar->getBody()->setGlobalPosition(Vector3(290,300,-550));
 }
 
 void Ai::update(float timeDelta){
 
 	pTargetPosition = pTrack->getTrackDataPiontAt(mCurrentWayPiont);
 
-	Vector3 destVector = *pTargetPosition - this->getVechicle()->getBody()->getNode()->getPosition();
-	destVector.y = 0;
-	destVector.normalise();
 
-	//Vector3 cp = destVector.crossProduct(this->getVechicle()->getBody()->getNode()->getOrientation() * Ogre::Vector3(1,0,1));
-	//float steer = cp.length();
+	//Vector3 forwardDir =  getVechicle()->getBody()->getNode()->getOrientation() *  Vector3( 1, 0,1 );
 
-	float angleDelta =  acos(  (this->getVechicle()->getBody()->getNode()->getOrientation() * Ogre::Vector3(1,0,1)).normalisedCopy().dotProduct( destVector ) );
+	
 
-	if( int(angleDelta) != 0 ){
+	//NxOgre::Matrix33  m = ;
+	NxOgre::Quat q = getVechicle()->getBody()->getGlobalOrientationQuat();
 
-		if(angleDelta > 0){
-			this->getVechicle()->steerLeft();
-		}else{
-			this->getVechicle()->steerRight();
-		}
+	//Ogre::Quaterion quat(q.w, q.x. q.y, q.z);
+
+	Vector3 target = Vector3( *pTargetPosition );
+	 target.y =0;
+
+	Vector3 forwardDir =  Ogre::Quaternion(q.w, q.x, q.y, q.z) *  Vector3( 1, 0,1 );
+
+	Vector3 destVector =  target -  Vector3( this->getVechicle()->getBody()->getGlobalPosition().x, 0 , this->getVechicle()->getBody()->getGlobalPosition().z );
+
+	float distance = destVector.length();
+
+	OutputDebugString( " Ogre Quat " );
+	OutputDebugString( Utils::toString(getVechicle()->getBody()->getNode()->getOrientation()).c_str() );
+	OutputDebugString( "\n" );
+
+
+	OutputDebugString( " NxOgre Quat " );
+	OutputDebugString( Utils::toString(getVechicle()->getBody()->getGlobalOrientation()).c_str() );
+	OutputDebugString( "\n" );
+
+
+	// create ManualObject
+
+	mSceneMgr->destroyAllManualObjects();
+
+	{
+
+	
+		ManualObject* manual =  mSceneMgr->createManualObject("manual");
+
+
+		// specify the material (by name) and rendering type
+		
+		manual->begin("BeachStones", RenderOperation::OT_LINE_STRIP);
+		manual->colour(0.2,0.0,1.0,1);
+		// define start and end point
+		Vector3 pos = Vector3( this->getVechicle()->getBody()->getGlobalPosition().x, this->getVechicle()->getBody()->getGlobalPosition().y , this->getVechicle()->getBody()->getGlobalPosition().z );
+		pos.y += 2;
+		manual->position(pos);
+		destVector.y += 2;
+		manual->position(destVector);
+
+		// tell Ogre, your definition has finished
+		manual->end();
+
+		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(manual);
+
 	}
 
-	float distance = ( this->getVechicle()->getBody()->getNode()->getPosition() - ( *pTargetPosition) ).length();
+	forwardDir.normalise();
+	destVector.normalise();
+	destVector.y = 0;
+	forwardDir.y = 0;
+	
+
+	{
+
+
+		ManualObject* manual =  mSceneMgr->createManualObject("manual2");
+
+
+		// specify the material (by name) and rendering type
+		manual->begin("BeachStones", RenderOperation::OT_LINE_STRIP);
+
+		// define start and end point
+		Vector3 pos = Vector3( this->getVechicle()->getBody()->getGlobalPosition().x, this->getVechicle()->getBody()->getGlobalPosition().y , this->getVechicle()->getBody()->getGlobalPosition().z );
+		pos.y += 2;
+		manual->position(pos );
+
+		forwardDir *= 10.2;
+		manual->position(pos + forwardDir);
+
+
+		// tell Ogre, your definition has finished
+		manual->end();
+
+		mSceneMgr->getRootSceneNode()->createChildSceneNode()->attachObject(manual);
+
+	}
+
+
+
+
+
+	// add ManualObject to the RootSceneNode (so it will be visible)
+	//mSceneMgr->getRootSceneNode()->attachObject(manual);
+
+
+	//forwardDir *= -1;
+
+
+
+
+	float angle =  Ogre::Degree( destVector.angleBetween( Ogre::Vector3( forwardDir.x , forwardDir.y , forwardDir.z )) ).valueAngleUnits();
+	
+
+	if( angle > 0){
+		angle -= 40;
+	}else{
+		angle += 40;
+	}
+
+	OutputDebugString( "Actually Angle " );
+	OutputDebugString( Utils::toString(angle).c_str() );
+	OutputDebugString( "\n" );
+	OutputDebugString( " Distance " );
+	OutputDebugString( Utils::toString(distance).c_str() );
+	OutputDebugString( "\n" );
+
+
+
+
+	if( int(angle) > 10.0f ){
+		
+	//	if(getVechicle()->getWheel(3)->getWheel()->getAxleSpeed() < 25)
+		
+			this->getVechicle()->steerLeft();
+
+	}
+	else if ( int(angle) < -10.0f) {
+
+	//	if(getVechicle()->getWheel(3)->getWheel()->getAxleSpeed() < 25)
+			this->getVechicle()->steerRight();
+	
+	}
+
 
 	if( distance > 10 ){
 
-		if( a > 5){
-
+		if(getVechicle()->getBody()->getLinearVelocity().magnitude() < 12)
 			this->getVechicle()->accelerate();
-			a = 0;
-		}
-
-		a++;
 
 	}else{
 
 		//a = -99999;
-		mCurrentWayPiont += 2;
-		//this->getVechicle()->deaccelerate();
+		mCurrentWayPiont += 12;
+		pTrack->getTrackNodeAt(mCurrentWayPiont)->scale(10,10,10);
+		
+		this->getVechicle()->deaccelerate();
 	}
-
-
-
-/*	
-	Ogre::Vector3 t = pTargetPosition->normalisedCopy();
-	t.y = 0;
-
-	Ogre::Vector3 modelDirection =  (this->getVechicle()->getBody()->getNode()->getOrientation() * Ogre::Vector3(1,0,1) );
-	modelDirection.y = 0;
-
-	float angleDelta =  acos(  modelDirection.normalisedCopy().dotProduct( t ) );
-
-	Vector3 posa = (*pTargetPosition - modelDirection);
-
-
-	if( (int(angleDelta) != 0) ){
-
-		if( angleDelta < 0 )
-			this->getVechicle()->steerLeft();
-
-		if(angleDelta > 0 )
-			this->getVechicle()->steerRight();
-	}else{
-		int g = 0;
-	}
-	
-
-	float distance = ( this->getVechicle()->getBody()->getNode()->getPosition() - ( *pTargetPosition) ).length();
-
-	if( distance > 25 ){
-		this->getVechicle()->accelerate();
-	}else{
-		mDataPointCount++;
-		//this->getVechicle()->deaccelerate();
-	}
-
-	*/
-
 
 }
 
@@ -127,4 +202,5 @@ Vehicle* Ai::getVechicle(){
 
 void Ai::setTrack(Track * pTrack){
 	this->pTrack = pTrack;
+		pTrack->getTrackNodeAt(mCurrentWayPiont)->scale(10,10,10);
 }

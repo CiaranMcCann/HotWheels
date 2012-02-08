@@ -80,6 +80,7 @@ Vehicle::Vehicle(std::string name, VehicleDescription vehDesc, Critter::RenderSy
 		wheels[i] = new VehicleWheel(vehicleName, static_cast<Wheel*>(body->getShape(i)), vehDesc.wheelPositions[i],(i % 2 == 0) ? 0 : 180.0f, body->getNode()->getSceneNode());
         Wheel* wheel=wheels[i]->getWheel();
 		wheel->setSteeringAngle(0);
+		
     }
 
     gears = new VehicleGears(vehDesc.gearDesc, this);
@@ -87,6 +88,8 @@ Vehicle::Vehicle(std::string name, VehicleDescription vehDesc, Critter::RenderSy
 
     accelerationPedal = 0;
     vDesc = vehDesc;
+
+	
 	
 	/*
 	Ogre::Entity *missile = mSceneMgr->createEntity("missile", Ogre::SceneManager::PT_SPHERE);
@@ -133,6 +136,12 @@ Vehicle::Vehicle(std::string name, VehicleDescription vehDesc, Critter::RenderSy
 	body->getNode()->getSceneNode()->addChild(particleNodeLeft);
 	
 	Ogre::Entity* c = body->getNode()->getEntityAt(0);
+
+	//this->getBody()->getNode()->getSceneNode()->rotate(Ogre::Vector3(0,1,0),Ogre::Degree(115),Ogre::Node::TS_WORLD);
+	//this->getBody()->setGlobalOrientationQuat( NxOgre::Quat(this->getBody()->getNode()->getSceneNode()->getOrientation()) );
+	
+
+	
 }
 
 Vehicle* Vehicle::createVehicle(NxOgre::String vehicleName, Critter::RenderSystem* critter,  Ogre::SceneManager* mSceneMgr)

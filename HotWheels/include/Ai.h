@@ -12,6 +12,7 @@ class Ai
 private:
 	Vehicle* pCar;
 	Track* pTrack;
+	SceneManager* mSceneMgr;
 
 	Ogre::Vector3 * pTargetPosition;
 	int mCurrentWayPiont;
