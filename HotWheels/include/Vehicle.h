@@ -42,8 +42,8 @@ public:
 
     void accelerate();
     void deaccelerate();
-    void steerLeft();
-    void steerRight();
+    void steerLeft(float userDefinedSteeringRate = 1);
+    void steerRight(float userDefinedSteeringRate = 1);
 
     int getCurrentGear() { return gears->getCurrentGear(); }
     float getRpm() { return motor->getRpm(); }
@@ -63,7 +63,7 @@ public:
 
 	VehicleWheel* getWheel(int index){
 
-		assert(index < 6);
+		assert(index < 4);
 		return wheels[index];
 	}
 

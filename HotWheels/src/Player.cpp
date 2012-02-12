@@ -15,7 +15,7 @@ Player::~Player(void)
 void Player::init(Critter::RenderSystem* render, Ogre::SceneManager* mSceneMgr){
 	pCar = Vehicle::createVehicle("camaro",render,  mSceneMgr);
 
-	pCar->getBody()->setGlobalPosition(Vector3(376.36890, 299.98193, -569.52747));	
+	pCar->getBody()->setGlobalPosition(Vector3(276.36890, 299.98193, -569.52747));	
 }
 
 
@@ -23,10 +23,7 @@ void Player::onKeyPress(OIS::Keyboard* pKeyBoard){
 
 	if (pKeyBoard->isKeyDown(OIS::KC_I)){
 		pCar->accelerate();
-		Ogre::Vector3 g = pCar->getBody()->getNode()->getPosition();
-		Ogre::Quaternion gh = pCar->getBody()->getNode()->getOrientation();
 
-		int j = 0;
 	}else if(pKeyBoard->isKeyDown(OIS::KC_K)){
 		pCar->deaccelerate();
 	}

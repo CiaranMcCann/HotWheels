@@ -37,6 +37,8 @@ public:
 
 	Ogre::SceneNode * getTrackNodeAt(int index);
 
+	bool checkIfFinished(int index);
+
 	void checkCurrentWayPoint(Ogre::Vector3 playerPosition);
 
 };

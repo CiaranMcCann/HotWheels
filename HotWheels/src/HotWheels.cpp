@@ -112,7 +112,9 @@ void HotWheels::createScene(){
 
 	
 	NxOgre::Mesh* terrain = mMeshManager->load("ogre://terrain.nxs", "terrain");
-	mScene->createSceneGeometry(NxOgre::TriangleGeometryDescription(terrain), NxOgre::Vec3(-500,-200,300));
+	NxOgre::SceneGeometry* t = mScene->createSceneGeometry(NxOgre::TriangleGeometryDescription(terrain), NxOgre::Vec3(-500,-200,300));
+	
+	
 	
 
 	Ogre::Entity * pTerrain = mSceneMgr->createEntity("island2", "SCG_terrain.mesh");
@@ -148,29 +150,40 @@ bool HotWheels::keyPressed( const OIS::KeyEvent &arg )
 
 bool HotWheels::frameRenderingQueued(const Ogre::FrameEvent& evt){
 
+	
 	mKeyboard->capture();
 	mMouse->capture();
-
-	mPlayer.onKeyPress(mKeyboard);
-
-	SoundManager::getInstance()->update();
-	
-	if(!Track::trackingEnabled)
-	mAi.update(evt.timeSinceLastFrame);
-
-	mAi.getVechicle()->update(evt.timeSinceLastFrame);
-	mPlayer.getVechicle()->update(evt.timeSinceLastFrame);
-
-	if(!Track::trackingEnabled)
-		mTrack.checkCurrentWayPoint(mPlayer.getVechicle()->getBody()->getNode()->getPosition());
-	
-	mWorld->advance(evt.timeSinceLastFrame); 
 	BaseApplication::frameRenderingQueued(evt);
 
-	mAi.getVechicle()->postPhysics(evt.timeSinceLastFrame);
-	mPlayer.getVechicle()->postPhysics(evt.timeSinceLastFrame);
+	if(!mUserInterface->isMenuShowing()){
+
+		mPlayer.onKeyPress(mKeyboard);
+
+		SoundManager::getInstance()->update();
+
+		if(!Track::trackingEnabled)
+			mAi.update(evt.timeSinceLastFrame);
+
+		mAi.getVechicle()->update(evt.timeSinceLastFrame);
+		mPlayer.getVechicle()->update(evt.timeSinceLastFrame);
+
+		if(!Track::trackingEnabled)
+			mTrack.checkCurrentWayPoint(mPlayer.getVechicle()->getBody()->getNode()->getPosition());
+
+		mWorld->advance(evt.timeSinceLastFrame); 
+		
+
+		mAi.getVechicle()->postPhysics(evt.timeSinceLastFrame);
+		mPlayer.getVechicle()->postPhysics(evt.timeSinceLastFrame);
+
+	}
 
 	
+	//Utils::log(Settings::debugMode);
+
+
+	if(mShutDown)
+		return false;
 
 	 return true;
 

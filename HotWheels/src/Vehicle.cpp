@@ -349,10 +349,19 @@ void Vehicle::deaccelerate()
     }
 }
 
-void Vehicle::steerLeft()
+void Vehicle::steerLeft(float userDefinedSteeringRate)
 {
     steering = true;
-    steer += vDesc.maxSteer * VEHICLE_STEERING_COEF;
+
+	/*
+	if(userDefinedSteeringRate == 1){
+		steer += vDesc.maxSteer * VEHICLE_STEERING_COEF;
+	}else{
+		//	steer += vDesc.maxSteer * userDefinedSteeringRate;
+	}
+	*/
+
+	steer += vDesc.maxSteer * VEHICLE_STEERING_COEF;
     if (steer > 1)
         steer = 1;
 
@@ -360,7 +369,7 @@ void Vehicle::steerLeft()
     wheels[ID_FRWheel - 3]->getWheel()->setSteeringAngle(NxOgre::Radian(steer * Ogre::Math::PI / 180 * vDesc.maxSteer));
 }
 
-void Vehicle::steerRight()
+void Vehicle::steerRight(float userDefinedSteeringRate)
 {
     steering = true;
     steer -= vDesc.maxSteer * VEHICLE_STEERING_COEF;

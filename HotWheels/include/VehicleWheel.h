@@ -15,6 +15,8 @@ public:
     float getRpm();
 
     Wheel* getWheel() { return wheel; }
+	SceneNode* getNode() { return thisNode; }
+
 protected:
     float baseOrientation;
     float spin;

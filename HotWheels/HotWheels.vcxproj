@@ -130,6 +130,7 @@
     <ClInclude Include="include\HotWheels.h" />
     <ClInclude Include="include\LinearInterpolationValues.h" />
     <ClInclude Include="include\Player.h" />
+    <ClInclude Include="include\Settings.h" />
     <ClInclude Include="include\SoundManager.h" />
     <ClInclude Include="include\stdafx.h" />
     <ClInclude Include="include\Track.h" />
@@ -150,6 +151,7 @@
     <ClCompile Include="src\GUI.cpp" />
     <ClCompile Include="src\HotWheels.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\Settings.cpp" />
     <ClCompile Include="src\SoundManager.cpp" />
     <ClCompile Include="src\stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

@@ -108,6 +108,9 @@
     <ClInclude Include="include\Ai.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Settings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\HotWheels.cpp">
@@ -138,6 +141,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Ai.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Settings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

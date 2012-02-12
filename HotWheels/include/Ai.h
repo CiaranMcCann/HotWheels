@@ -3,6 +3,7 @@
 #include "Vehicle.h"
 #include "Track.h"
 #include <math.h>
+#include "OgreException.h"
 
 using namespace Ogre;
 
@@ -16,7 +17,7 @@ private:
 
 	Ogre::Vector3 * pTargetPosition;
 	int mCurrentWayPiont;
-	float a;
+	float count;
 
 	Ai(Ai &); // disable copy construction
 

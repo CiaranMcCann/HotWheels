@@ -5,6 +5,23 @@ using namespace std;
 
 namespace Utils {
 
+	static int lineCount = 0;
+		
+	template<typename T> //hack as I get a linker error if I don't have this???
+	int drawLine(T & pos1, T & pos2, SceneManager *  mSceneManager){
+
+		lineCount++;
+
+		ManualObject* manual =  mSceneManager->createManualObject("drawLine" + Utils::toString(lineCount));
+		manual->begin("BeachStones", RenderOperation::OT_LINE_STRIP);	
+		manual->position(pos1);
+		manual->position(pos2);
+		manual->end();
+		mSceneManager->getRootSceneNode()->createChildSceneNode()->attachObject(manual);
+
+		return lineCount;
+	}
+
 
 	template<typename T>
 	float toDegree(T radians){
@@ -25,7 +42,13 @@ namespace Utils {
 	void logMessage(T objectToPrint){
 		_cprintf( (toString(objectToPrint)+"\n").c_str() );
 	}
-	
+
+	template<typename T>
+	void log(T objectToPrint){
+		OutputDebugString( (toString(objectToPrint)+"\n").c_str() );
+	}
+
+
 	template<typename T> //hack as I get a linker error if I don't have this???
 	void split(const T& str, const string& delimiters , std::vector<string>& tokens)
 	{
