@@ -10,7 +10,8 @@ using namespace NxOgre;
 
 int Vehicle::vehicleCount = 0; 
 
-Vehicle::Vehicle(std::string name, VehicleDescription vehDesc, Critter::RenderSystem* critter, Ogre::SceneManager* mSceneMgr)
+Vehicle::Vehicle(std::string name, VehicleDescription vehDesc, Critter::RenderSystem* critter, Ogre::SceneManager* mSceneMgr):
+	motorToqureMultplier(0.2)
 {
 	//load sounds
 	vehicleCount++;
@@ -240,15 +241,15 @@ void Vehicle::update(float diff)
         if (gears->getCurrentGear() <= 1)
             gears->setGear(1);
 
-        if (vDesc.backWheelTorque)
+        if (vDesc.backWheelTorque && false)
         {
             wheels[ID_BLWheel - 3]->getWheel()->setMotorTorque(motorTorque);
             wheels[ID_BRWheel - 3]->getWheel()->setMotorTorque(motorTorque);
         }
-        if (vDesc.frontWheelTorque)
+        if (vDesc.frontWheelTorque || true)
         {
-            wheels[ID_FLWheel - 3]->getWheel()->setMotorTorque(motorTorque);
-            wheels[ID_FRWheel - 3]->getWheel()->setMotorTorque(motorTorque);
+            wheels[ID_FLWheel - 3]->getWheel()->setMotorTorque(motorTorque*2.5);
+            wheels[ID_FRWheel - 3]->getWheel()->setMotorTorque(motorTorque*2.5);
         }
     }
     else if (accelerationPedal < 0)

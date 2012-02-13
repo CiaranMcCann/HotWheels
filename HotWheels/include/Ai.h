@@ -4,6 +4,7 @@
 #include "Track.h"
 #include <math.h>
 #include "OgreException.h"
+#include "Settings.h"
 
 using namespace Ogre;
 
@@ -29,7 +30,6 @@ public:
 
 	void init(Critter::RenderSystem* render, Ogre::SceneManager* mSceneMgr);
 
-	void onKeyPress(OIS::Keyboard* pKeyBoard);
 	void update(float timeDelta);
 	//void attachCamera(Ogre::Camera* pCamera);
 	~Ai(void);

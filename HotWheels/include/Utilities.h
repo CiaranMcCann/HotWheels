@@ -3,9 +3,29 @@
 
 using namespace std;
 
+
+namespace NxOgreUtils{
+
+	template<typename T> //hack as I get a linker error if I don't have this???
+	void rotate(Critter::Body* body, Vector3 axiesOfRoatation, T degree ){
+
+		Ogre::Matrix3 xRotation;
+		xRotation.FromAxisAngle(axiesOfRoatation, Ogre::Degree(degree));
+
+		Ogre::Quaternion quat;
+		quat.FromRotationMatrix(xRotation);
+
+		Vec4 v;
+		v.set(quat.w, quat.x, quat.y, quat.z);
+		body->setGlobalOrientationQuat(v);
+
+	}
+}
+
 namespace Utils {
 
 	static int lineCount = 0;
+
 		
 	template<typename T> //hack as I get a linker error if I don't have this???
 	int drawLine(T & pos1, T & pos2, SceneManager *  mSceneManager){

@@ -1,7 +1,14 @@
 #pragma once
 #include "stdafx.h"
 
-
+/**
+ * @class	GUI
+ *
+ * @brief	Graphical user interface.
+ *
+ * @author	Lab 422
+ * @date	13/02/2012
+ */
 class GUI : OgreBites::SdkTrayListener
 {
 public:

@@ -15,7 +15,13 @@ Player::~Player(void)
 void Player::init(Critter::RenderSystem* render, Ogre::SceneManager* mSceneMgr){
 	pCar = Vehicle::createVehicle("camaro",render,  mSceneMgr);
 
-	pCar->getBody()->setGlobalPosition(Vector3(276.36890, 299.98193, -569.52747));	
+
+	NxOgreUtils::rotate(pCar->getBody(), Vector3(0,1,0), -45);
+	pCar->getBody()->setGlobalPosition(Vector3(330.36890, 299.98193, -569.52747));	
+//	pCar->setSteeringCoef(0.002f);
+	
+	//pCar->getBody()->setG
+//	pCar->getBody()->setGlobalPosition(Vector3(276.36890, 299.98193, -569.52747));	
 }
 
 

@@ -298,11 +298,11 @@ bool BaseApplication::frameRenderingQueued(const Ogre::FrameEvent& evt)
 		mLastTimeStep = mScene->getTimeStep().getModified();
 
 		// Don't let the camera go underground.
-		//if (mCamera->getPosition().y < 0.5f)
+		if (mCamera->getPosition().y < 0.5f)
 		{
-			//Ogre::Vector3 pos = mCamera->getPosition();
-			//pos.y = 0.5f;
-			//mCamera->setPosition(pos);
+			Ogre::Vector3 pos = mCamera->getPosition();
+			pos.y = 0.5f;
+			mCamera->setPosition(pos);
 		}
 	
 		if(mWindow->isClosed())

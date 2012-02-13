@@ -24,7 +24,7 @@ enum VehiclePartIds
 };
 
 
-const float VEHICLE_STEERING_COEF = 0.002f;
+const float VEHICLE_STEERING_COEF = 0.08f;
 const NxOgre::MaterialIdentifier VEHICLE_MATERIAL_ID = 128;
 
 class Vehicle
@@ -67,12 +67,19 @@ public:
 		return wheels[index];
 	}
 
+	void setMotorToqureMultplier(float m){
+		this->motorToqureMultplier = m;
+	}
+
+
+
 	VehicleWheel* wheels[4];
 
 protected:
     bool steering;
     float accelerationPedal;
     float steer;
+	float motorToqureMultplier;
 
 	bool revingSound;
 
